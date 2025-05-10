@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirección según peso</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 320px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      background: #007BFF;
+      border: none;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .error {
+      color: #d9534f;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ingresa tu peso (kg)</h1>
+    <input type="number" id="pesoInput" placeholder="Ej: 56" min="0" />
+    <button onclick="redirigir()">Enviar</button>
+    <p id="mensaje" class="error"></p>
+  </div>
+  <script>
+    function redirigir() {
+      const peso = parseFloat(document.getElementById('pesoInput').value);
+      const mensajeEl = document.getElementById('mensaje');
+      mensajeEl.textContent = '';
+      if (isNaN(peso) || peso <= 0) {
+        mensajeEl.textContent = 'Por favor ingresa un peso válido.';
+        return;
+      }
+
+      // Definir rangos y enlaces de video
+      const rangos = [
+        { min: 20, max: 40, url: 'skeleton.mp4' },
+        { min: 41, max: 50, url: 'skeleton.mp4' },
+        { min: 51, max: 60, url: 'skeleton.mp4' },
+        { min: 61, max: 75, url: 'normal.mp4' },
+        { min: 76, max: 80, url: 'gorda.mp4' },
+        { min: 81, max: 10000000000000, url: 'gorda.mp4' }
+        // Agrega más rangos según necesites
+      ];
+
+      // Buscar el rango correspondiente
+      const encontrado = rangos.find(r => peso >= r.min && peso <= r.max);
+      if (encontrado) {
+        window.location.href = encontrado.url;
+      } else {
+        mensajeEl.textContent = 'ingresa el peso de una persona, animal';
+      }
+    }
+  </script>
+</body>
+</html>
